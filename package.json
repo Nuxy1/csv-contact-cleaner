@@ -1,0 +1,13 @@
+{
+  "name": "csv-cleaner",
+  "version": "1.0.0",
+  "description": "Clean, dedupe and validate contact CSVs before an import: phones to E.164, names, dates, emails; nothing guessed, everything reported. Zero dependencies.",
+  "type": "module",
+  "bin": { "clean-csv": "bin/clean-csv.js" },
+  "scripts": {
+    "test": "node --test",
+    "demo": "node bin/clean-csv.js fixtures/contacts-messy.csv --map \"email=Email,phone=Phone,name=Full Name,date=Signed up\" --out out"
+  },
+  "engines": { "node": ">=20" },
+  "license": "MIT"
+}
