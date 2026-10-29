@@ -45,4 +45,4 @@ Duplicates are rows with the same email, or the same phone when there's no email
 npm test   # the CSV parser (quotes, newlines in fields, CRLF, BOM), each normaliser, the sample end to end, the CLI
 ```
 
-Zero dependencies; it needs Node.js 20 or later. The CSV parser follows RFC 4180, so the commas, quotes and line breaks that spreadsheets put inside fields are handled.
+Zero dependencies; it needs Node.js 20 or later. The CSV parser follows RFC 4180, so the commas, quotes and line breaks that spreadsheets put inside fields are handled. A cell that Excel would run as a formula (one starting with `=`, `+`, `-` or `@`, such as `=HYPERLINK(...)` typed into a signup form) is written with a leading `'` so it opens as plain text; ordinary numbers such as `-12.50` and `+15550104477` are left as they are.
