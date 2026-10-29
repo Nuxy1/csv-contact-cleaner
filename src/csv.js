@@ -53,9 +53,13 @@ export function toRecords(rows) {
   });
 }
 
+// A cell Excel or Sheets would run as a formula (= + - @ tab or CR first) gets a leading ' so it opens as text
+// (CSV injection: "=HYPERLINK(...)" typed into a signup form). Plain numbers like -12.50 or +15550104477 stay as they are.
+export const formulaSafe = (text) => (/^[=+\-@\t\r]/.test(text) && !/^[+-]?\d+(\.\d+)?$/.test(text) ? `'${text}` : text);
+
 export function stringifyCsv(rows) {
   return rows.map((row) => row.map((value) => {
-    const text = String(value ?? "");
+    const text = formulaSafe(String(value ?? ""));
     return /[",\r\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
   }).join(",")).join("\r\n") + "\r\n";
 }
