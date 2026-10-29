@@ -20,6 +20,11 @@ test("csv: quotes, doubled quotes, newlines in quotes, CRLF, BOM, blank lines", 
   assert.deepEqual(parseCsv(stringifyCsv(rows)), rows);
 });
 
+test("csv: cells that would run as formulas open as text, numbers don't change", () => {
+  const out = stringifyCsv([['=HYPERLINK("http://x.example","Click")', "+1+cmd", "-2+3", "@SUM(A1)", "\t=1", "-12.50", "+15550104477", "Ann"]]);
+  assert.equal(out, `"'=HYPERLINK(""http://x.example"",""Click"")",'+1+cmd,'-2+3,'@SUM(A1),'\t=1,-12.50,+15550104477,Ann\r\n`);
+});
+
 test("normalisers", () => {
   assert.deepEqual(email(" Jordan.Example@Example.com "), { value: "jordan.example@example.com", ok: true, note: "email tidied" });
   assert.equal(email("priya@gmial.com").value, "priya@gmail.com");
